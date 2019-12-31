@@ -6,6 +6,7 @@
 package innui.webtec;
 
 import ingui.javafx.webtec.Webtec;
+import static ingui.javafx.webtec.Webtec.k_contexto_rutas_mapa;
 import innui.contextos.a_eles;
 import innui.contextos.contextos;
 import innui.contextos.filas;
@@ -23,31 +24,32 @@ import java.util.Map;
  */
 public class Webtec_controlador {    
     public static int k_urls_fila_max_tam = 100;
-    public static String k_urls_fila_nombre = "historial_urls_fila";
+    public static String k_urls_fila_nombre = "historial_urls_fila"; //NOI18N
     
     public Procesamientos procesamiento = new Procesamientos();
     public Ejecutores ejecutor = new Ejecutores();
     public Map <String, String> rutas_mapa = null;
-    public contextos con_su = null;
+    public contextos contexto = null;
     public filas urls_fila = null;
     
     public boolean configurar(contextos con, Boolean mantener_historial, String [] error) {
         boolean ret = true;
-        con_su = con;
+        contexto = con;
+        rutas_mapa = con.leer(k_contexto_rutas_mapa).dar();
         ejecutor.configurar(con);
         procesamiento.poner_contexto(con);
         urls_fila = con.leer(k_urls_fila_nombre).dar();
         if (urls_fila == null || mantener_historial == false) {
             urls_fila = new filas();
             urls_fila.poner_max_tam(k_urls_fila_max_tam);
-            con_su.superponer(k_urls_fila_nombre, urls_fila);
+            contexto.superponer(k_urls_fila_nombre, urls_fila);
         }
         return ret;
     }
 
     public boolean poner_error(String mensaje) {
-        String [] error = { "" };
-        return cargar_contenido(mensaje, "text/html", error);
+        String [] error = { "" }; //NOI18N
+        return cargar_contenido(mensaje, "text/html", error); //NOI18N
     }
     
     public boolean cargar_contenido(String contenido, String tipo_contenido, String [] error) {
@@ -113,16 +115,16 @@ public class Webtec_controlador {
                         ret = (contenido != null);
                     }
                     if (ret) {
-                        ret = cargar_contenido(contenido, "text/html", error);
+                        ret = cargar_contenido(contenido, "text/html", error); //NOI18N
                     }
                 }
             }
         } catch (Exception e) {
             error [0] = e.getMessage();
             if (error[0] == null) {
-                error[0] = "";
+                error[0] = ""; //NOI18N
             }
-            error[0] = "Error al analizar el cambio de URL. " + error[0];
+            error[0] = java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("in/innui/webtec/in").getString("ERROR AL ANALIZAR EL CAMBIO DE URL. {0}"), new Object[] {error[0]});
             ret = false;
         }
         return ret;

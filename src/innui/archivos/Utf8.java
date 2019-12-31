@@ -25,15 +25,15 @@ public class Utf8 {
             file = new File(ruta_archivo);
             if (! file.exists()) {
                 ret = false;
-                error[0] = "No se ha encontrado el archivo: " + ruta_archivo;
+                error[0] = java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("in/innui/archivos/in").getString("NO SE HA ENCONTRADO EL ARCHIVO: {0}"), new Object[] {ruta_archivo});
             }
             if (ret) {
                 char[] char_array = new char[100];
                 int tam;
                 FileInputStream fileInputStream = new FileInputStream(file);
-                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
+                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8"); //NOI18N
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                retorno = "";
+                retorno = ""; //NOI18N
                 while (true) {
                     tam = bufferedReader.read(char_array);
                     if (tam < 0) {
@@ -47,9 +47,9 @@ public class Utf8 {
         } catch (Exception e) {
             error[0] = e.getMessage();
             if (error[0] == null) {
-                error[0] = "";
+                error[0] = ""; //NOI18N
             }
-            error[0] = "Error en leer_archivo_utf8. " + error[0];
+            error[0] = java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("in/innui/archivos/in").getString("ERROR EN LEER_ARCHIVO_UTF8. {0}"), new Object[] {error[0]});
             ret = false;
             retorno = null;
         }

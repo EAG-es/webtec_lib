@@ -5,7 +5,6 @@
  */
 package ingui.javafx.webtec;
 
-import ingui.javafx.webtec.FXML_webtecController;
 import innui.contextos.contextos;
 import java.io.InputStream;
 import java.net.URL;
@@ -24,7 +23,8 @@ import javafx.stage.Stage;
  * @author daw
  */
 public class Webtec extends Application {
-    public static String k_prefijo_url="innui/webtec";
+    public static String k_prefijo_url="innui/webtec"; //NOI18N
+    public static String k_contexto_rutas_mapa="ingui_javafx_webtec_webtec_ruta_mapas"; //NOI18N
     public Map <String, String> rutas_mapa = null;   
     public FXML_webtecController fXML_webtec_jafController = null;
     public contextos contexto = new contextos();
@@ -32,8 +32,8 @@ public class Webtec extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         boolean ret = true;
-        String [] error = { "" };
-        String resourcePath = "/ingui/javafx/webtec/FXML_webtec.fxml";
+        String [] error = { "" }; //NOI18N
+        String resourcePath = "/ingui/javafx/webtec/FXML_webtec.fxml"; //NOI18N
         URL location = getClass().getResource(resourcePath);
         FXMLLoader fXMLLoader = new FXMLLoader(location);
         Parent root = fXMLLoader.load();
@@ -41,11 +41,11 @@ public class Webtec extends Application {
         Initializable initializable = fXMLLoader.getController();
         if (initializable instanceof FXML_webtecController) {
             fXML_webtec_jafController = (FXML_webtecController) initializable;
-            fXML_webtec_jafController.rutas_mapa = rutas_mapa;
+            contexto.superponer(k_contexto_rutas_mapa, rutas_mapa);
             fXML_webtec_jafController.configurar(contexto, true, error);
         } else {
             ret = false;
-            error[0] = "El controlador no es de la clase FXML_browser_jafController. ";
+            error[0] = java.util.ResourceBundle.getBundle("in/ingui/javafx/webtec/in").getString("EL CONTROLADOR NO ES DE LA CLASE FXML_BROWSER_JAFCONTROLLER. ");
         }
         if (ret) {
             ret = configurar(stage, error);
@@ -63,11 +63,11 @@ public class Webtec extends Application {
 
     public boolean configurar(Stage stage, String [] error) {
         boolean ret = true;
-        stage.setTitle("Webtec");
+        stage.setTitle(java.util.ResourceBundle.getBundle("in/ingui/javafx/webtec/in").getString("WEBTEC"));
         ObservableList<Image> observableList = stage.getIcons();
         InputStream inputStream
                 = Webtec.class.getResourceAsStream(
-                "/recursos/ingui/javafx/webtec/icono_web_carpeta.png");
+                "/recursos/ingui/javafx/webtec/icono_web_carpeta.png"); //NOI18N
         Image image = new Image(inputStream);
         observableList.add(image);
         return ret;

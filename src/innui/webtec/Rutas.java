@@ -21,13 +21,13 @@ public class Rutas {
     {
         boolean ret = true;
         String ruta;
-        String clase = "";
+        String clase = ""; //NOI18N
         if (rutas_mapa != null) {
             for (Map.Entry<String, String> entrada: rutas_mapa.entrySet()) {
                 ruta = entrada.getKey();
-                if (ruta.contains("{")) {
-                    ruta = ruta.replace("/", "\\/");
-                    ruta = ruta.replaceAll("\\{[^}]*\\}", "[^/]*");
+                if (ruta.contains("{")) { //NOI18N
+                    ruta = ruta.replace("/", "\\/"); //NOI18N
+                    ruta = ruta.replaceAll("\\{[^}]*\\}", "[^/]*"); //NOI18N
                     if (ruta_buscada.matches(ruta)) {
                         rutas_posibles_mapa.put(entrada.getKey(), entrada.getValue());
                     }
@@ -59,7 +59,7 @@ public class Rutas {
         String [] rutas_array;
         for (Map.Entry<String, String> entrada: rutas_posibles_mapa.entrySet()) {
             ruta = entrada.getKey();
-            rutas_array = ruta.split("/");
+            rutas_array = ruta.split("/"); //NOI18N
             profundidad_nueva = rutas_array.length;
             if (profundidad_nueva > profundidad) {
                 profundidad = profundidad_nueva;
@@ -76,12 +76,12 @@ public class Rutas {
         boolean ret = true;
         String clave;
         List<String> lista = null;
-        String [] ruta_seleccionada_array = ruta_seleccionada.split("\\{");
+        String [] ruta_seleccionada_array = ruta_seleccionada.split("\\{"); //NOI18N
         int i = 0;
         int pos;
         for (String ruta_parte: ruta_seleccionada_array) {
             if (ruta_parte.isEmpty() == false) {
-                pos = ruta_parte.indexOf("}");
+                pos = ruta_parte.indexOf("}"); //NOI18N
                 if (pos >= 0) {
                     clave = ruta_parte.substring(0, pos);
                     objetos_mapa.put(clave, url_fragmentos_path_lista.get(i));
@@ -95,14 +95,14 @@ public class Rutas {
     public static String convertir_nombre_clase_a_ruta(String nombre_clase, String [] error)
     {
         nombre_clase = nombre_clase.toLowerCase();
-        return nombre_clase.replace(".", "/");
+        return nombre_clase.replace(".", "/"); //NOI18N
     }
     
     public static String convertir_nombre_ruta_a_clase(String nombre_clase, String [] error)
     {
         nombre_clase = nombre_clase.toLowerCase();
-        nombre_clase = nombre_clase.replace("/", ".");
-        if (nombre_clase.startsWith(".")) {
+        nombre_clase = nombre_clase.replace("/", "."); //NOI18N
+        if (nombre_clase.startsWith(".")) { //NOI18N
             nombre_clase = nombre_clase.substring(1);
         }
         return nombre_clase;

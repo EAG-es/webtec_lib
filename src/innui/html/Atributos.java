@@ -18,7 +18,7 @@ public class Atributos {
         String atributo_buscado;
         int pos;
         etiqueta_origen = etiqueta.toLowerCase();
-        etiqueta_origen = etiqueta_origen.replaceAll("\\s+=\\s+", "=");
+        etiqueta_origen = etiqueta_origen.replaceAll("\\s+=\\s+", "="); //NOI18N
         atributo_buscado = atributo.toLowerCase();
         pos = etiqueta_origen.indexOf(atributo_buscado);
         if (pos >= 0) {
@@ -29,7 +29,7 @@ public class Atributos {
                 resultado = etiqueta_origen.substring(pos + 1, pos_final);
             }
         } else {
-            error[0] = "No se ha encontrado el atributo en la etiqueta. ";
+            error[0] = java.util.ResourceBundle.getBundle("in/innui/html/in").getString("NO SE HA ENCONTRADO EL ATRIBUTO EN LA ETIQUETA. ");
             ret = false;
             resultado = null;
         }

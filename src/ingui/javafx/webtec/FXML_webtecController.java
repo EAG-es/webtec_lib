@@ -31,7 +31,7 @@ public class FXML_webtecController extends Webtec_controlador implements Initial
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         boolean ret = true;
-        String [] error = { "" };
+        String [] error = { "" }; //NOI18N
         ret = poner_escuchador_cambios_url(error);
         if (ret == false) {
             poner_error(error[0]);
@@ -46,7 +46,7 @@ public class FXML_webtecController extends Webtec_controlador implements Initial
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 boolean ret = true;
-                String [] error = { "" };
+                String [] error = { "" }; //NOI18N
                 URL url;
                 Map <String, Object> datos_mapa = null;
                 try {
@@ -59,7 +59,7 @@ public class FXML_webtecController extends Webtec_controlador implements Initial
                         }
                     }
                 } catch (Exception e) {
-                    throw new RuntimeException("Error en poner_escuchador_cambios_url->changed. ", e);
+                    throw new RuntimeException(java.util.ResourceBundle.getBundle("in/ingui/javafx/webtec/in").getString("ERROR EN PONER_ESCUCHADOR_CAMBIOS_URL->CHANGED. "), e);
                 }
             }           
         });
@@ -68,8 +68,8 @@ public class FXML_webtecController extends Webtec_controlador implements Initial
     
     @Override
     public boolean poner_error(String mensaje) {
-        String [] error = { "" };
-        return cargar_contenido(mensaje, "text/html", error);
+        String [] error = { "" }; //NOI18N
+        return cargar_contenido(mensaje, "text/html", error); //NOI18N
     }
     
     @Override

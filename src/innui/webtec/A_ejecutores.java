@@ -50,7 +50,7 @@ public abstract class A_ejecutores {
                 if (objeto instanceof String) {
                     clave = (String) objeto;
                 } else {
-                    error[0] = "Las posiciones pares corresponden a los nombres de las claves. ";
+                    error[0] = java.util.ResourceBundle.getBundle("in/innui/webtec/in").getString("LAS POSICIONES PARES CORRESPONDEN A LOS NOMBRES DE LAS CLAVES. ");
                     objects_mapa = null;
                     break;
                 }

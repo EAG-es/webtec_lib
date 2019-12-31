@@ -14,9 +14,10 @@ import java.util.Map.Entry;
  * @author daw
  */
 public class Ejecutores extends A_ejecutores {
-    public static String k_mapa_nombre_clase = "innui_webtec_ejecutores_nombre_clase";
-    public static String k_mapa_nombre_plantilla = "innui_webtec_ejecutores_nombre_plantilla";
-    public static String k_mapa_ruta_base = "innui_webtec_ejecutores_ruta_base";
+    public static String k_mapa_nombre_clase = "innui_webtec_ejecutores_nombre_clase"; //NOI18N
+    public static String k_mapa_nombre_plantilla = "innui_webtec_ejecutores_nombre_plantilla"; //NOI18N
+    public static String k_mapa_ruta_base = "innui_webtec_ejecutores_ruta_base"; //NOI18N
+    public static String k_mapa_parametros_num = "innui_webtec_ejecutores_parametros_num"; //NOI18N
     public Map<String, A_ejecutores> a_ejecutores_mapa = new HashMap();
     
     @Override
@@ -41,7 +42,7 @@ public class Ejecutores extends A_ejecutores {
                     a_ejecutor = (A_ejecutores) objeto;
                     a_ejecutor.configurar(contexto);
                 } else {
-                    error[0] = "La clase indicada no implementa la clase abstracta A_ejecutores. ";
+                    error[0] = java.util.ResourceBundle.getBundle("in/innui/webtec/in").getString("LA CLASE INDICADA NO IMPLEMENTA LA CLASE ABSTRACTA A_EJECUTORES. ");
                     ret = false;
                 }
                 if (ret) {
@@ -55,9 +56,9 @@ public class Ejecutores extends A_ejecutores {
         } catch (Exception e) {
             error [0] = e.getMessage();
             if (error[0] == null) {
-                error[0] = "";
+                error[0] = ""; //NOI18N
             }
-            error[0] = "Error al ejecutar. " + error[0];
+            error[0] = java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("in/innui/webtec/in").getString("ERROR AL EJECUTAR. {0}"), new Object[] {error[0]});
             ret = false;
         }
         return ret;
@@ -68,15 +69,15 @@ public class Ejecutores extends A_ejecutores {
         boolean ret = true;
         boolean ret_1 = true;
         A_ejecutores a_ejecutor = null;
-        String nombre = "";
-        error[0] = "";
-        String [] error_1 = { "" };
+        String nombre = ""; //NOI18N
+        error[0] = ""; //NOI18N
+        String [] error_1 = { "" }; //NOI18N
         for (Entry<String, A_ejecutores> nodo : a_ejecutores_mapa.entrySet()) {
             a_ejecutor = nodo.getValue();
             ret_1 = a_ejecutor.terminar(objects_mapa, error_1);
             if (ret_1 == false) {
                 nombre = nodo.getKey();
-                error[0] += " " + nombre + " { " + error_1[0] + " } ";
+                error[0] += " " + nombre + " { " + error_1[0] + " } "; //NOI18N
                 ret = false;
             }
         }
