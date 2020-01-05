@@ -6,14 +6,16 @@
 package innui.webtec;
 
 /**
- *
- * @author emilio
+ * Clase que sustitulle los métodos de Webtec_controlador para almacenar el resultado en un atributo String
  */
 public class String_webtec_controlador extends Webtec_controlador {
+    /**
+     * Objeto que contiene el contenido cargado, o el error puesto.
+     */
     public String contenido; 
     
     @Override
-    public boolean cargar_contenido(String contenido, String tipo_contenido, String [] error) {
+    public boolean cargar_contenido(String contenido, String tipo_contenido, String ref, String [] error) {
         boolean ret = true;
         this.contenido = contenido;
         return ret;
@@ -24,6 +26,6 @@ public class String_webtec_controlador extends Webtec_controlador {
         boolean ret = true;
         this.contenido = mensaje;
         return ret;
-    }
+    }    
 
 }

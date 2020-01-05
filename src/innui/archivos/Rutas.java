@@ -8,25 +8,27 @@ package innui.archivos;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
- *
- * @author daw
+ * Clase con métodos para manejar rutas de archivos
  */
 public class Rutas {
     /**
-     * Para conseguir que los archivos de assets se copien a la carpeta de distribución (dist)
+     * Para conseguir que los archivos de recursos (assets) se copien a la carpeta de distribución (dist)
      * se debe modificar el archivo: built.xml
      * <pre>{@code 
      * <target name="-post-compile"> 
-     *     <copy todir="${dist.dir}/assets">
-     *         <fileset dir="assets" includes="**" />
+     *     <copy todir="${dist.dir}/lib/recursos">
+     *         <fileset dir="recursos" includes="**" />
      *     </copy>
      *  </target> 
      * }</pre>
-     * @param nombre
-     * @param error
-     * @return 
+     * Dada una clase, obtiene la ruta de archivos hasta ella, tanto si la calse está en un archivo jar o no.
+     * @param clase Clase de la que extraer la ruta base
+     * @param error mensaje de error, si lo hay.
+     * @return La ruta base, null si hay algún error
      */
     public static String leer_ruta_base(Class clase, String [] error)
     {
@@ -69,19 +71,25 @@ public class Rutas {
         }
         return resultado;
     }
-    
+    /**
+     * Añade una ruta de archivos tras una ruta de archivos dada, resolviendo la falta o exceso de separadores de carpeta
+     * @param ruta Ruta de archivo que aumentar
+     * @param nombre Ruta que poner para aumentar la ruta.
+     * @param error mensaje de error, si lo hay.
+     * @return La ruta aumentada, null si hay algún error
+     */
     public static String aumentar_ruta(String ruta, String nombre, String [] error)
     {
         String resultado = null;
         if (ruta != null) {
-            if (ruta.endsWith("/")) { //NOI18N
-                if (nombre.startsWith("/")) { //NOI18N
+            if (ruta.endsWith(File.separator)) { //NOI18N
+                if (nombre.startsWith(File.separator)) { //NOI18N
                     nombre = nombre.substring(1);
                 }
                 ruta = ruta + nombre;
             } else {
-                if (nombre.startsWith("/") == false) { //NOI18N
-                    nombre = "/" + nombre; //NOI18N
+                if (nombre.startsWith(File.separator) == false) { //NOI18N
+                    nombre = File.separator + nombre; //NOI18N
                 }
                 ruta = ruta + nombre;
             }
@@ -89,5 +97,16 @@ public class Rutas {
         }
         return resultado;
     }
-    
+    /**
+     * Lee la ruta absoluta de trabajo
+     * @param error Mensaje de error, si lo hay
+     * @return La ruta de trabajo, null si hay error.
+     */
+    public static String leer_ruta_trabajo(String [] error) {
+        String retorno = null;
+        Path path = Paths.get("");
+        path = path.toAbsolutePath();
+        retorno = path.toString();
+        return retorno;
+    }
 }

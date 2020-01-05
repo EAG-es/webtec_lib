@@ -14,12 +14,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- *
- * @author daw
+ * Clase para manejar URLs
  */
 public class Urls {
+    /**
+     * Protocolo por defecto 
+     */
     public static String k_protocolo_por_defecto = "https"; //NOI18N
-    
+    /**
+     * Obtiene los parámetros de la consulta de una url
+     * @param url URL de donde extraerlos.
+     * @param objects_mapa Mapa donde almacenar las claves y los valores extraidos.
+     * @param error mensaje de error, si lo hay.
+     * @return true si tiene éxito, false si hay algún error
+     */
     public static boolean extraer_parametros_query(URL url, Map<String, Object> objects_mapa, String [] error)
     {
         boolean ret = true;
@@ -82,7 +90,24 @@ public class Urls {
         }
         return ret;
     }
-    
+    /**
+     * Extrae
+     * @param url_texto
+     * @param error
+     * @return 
+     */
+    public static String extraer_anclaje(String url_texto, String [] error)
+    {
+        String resto = null; 
+        return resto;
+    }
+    /**
+     * Extrae la parte de la ruta de la url que sigue al macador indicado.
+     * @param url_texto Texto con la URlL de la que extraer la ruta
+     * @param marcador Marcdor que buscar en la ruta, a partir del que extraer.
+     * @param error mensaje de error, si lo hay.
+     * @return El path dentro de la URL; o null si no encuentra el marcador
+     */
     public static String extraer_path(String url_texto, String marcador, String [] error)
     {
         String resto = null; 
@@ -100,14 +125,19 @@ public class Urls {
             if (pos_fin >= 0) {
                 resto = resto.substring(pos_inicio, pos_fin);
             }
+            pos_inicio = resto.indexOf("://"); //NOI18N
+            if (pos_inicio >= 0) {
+                resto = resto.substring(pos_inicio + "://".length()); //NOI18N
+            }           
         }
-        pos_inicio = resto.indexOf("://"); //NOI18N
-        if (pos_inicio >= 0) {
-            resto = resto.substring(pos_inicio + "://".length()); //NOI18N
-        }            
         return resto;
     }
-    
+    /**
+     * Extrae el protocolo de un texto con una URL
+     * @param url_texto Texto con la URlL de la que extraer el protocolo.
+     * @param error mensaje de error, si lo hay.
+     * @return El protocolo si tiene éxito, null si hay algún error
+     */
     public static String extraer_protocolo(String url_texto, String [] error)
     {
         String retorno = null; 
@@ -118,7 +148,13 @@ public class Urls {
         }            
         return retorno;
     }
-    
+    /**
+     * Extrae las subcarpetas de una ruta de url.
+     * @param ruta Ruta de url de la que extraer
+     * @param url_fragmentos_path_lista Lista conteniendo las subcarpetas.
+     * @param error mensaje de error, si lo hay.
+     * @return true si tiene éxito, false si hay algún error
+     */
     public static boolean extraer_fragmentos_path(String ruta, List <String> url_fragmentos_path_lista, String [] error)
     {
         boolean ret = true;
@@ -132,6 +168,13 @@ public class Urls {
         }
         return ret;
     }
+    /**
+     * Añade el protocolo a un texto con una url, si no lo tiene.
+     * @param url_texto Texto con la URL
+     * @param protocolo_si_falta Protocolo que poner, si falta.
+     * @param error mensaje de error, si lo hay.
+     * @return la URL coimpletada con el protocolo, null si hay error.
+     */
     public static URL completar_URL(String url_texto, String protocolo_si_falta, String [] error) {
         URL retorno = null;
         String texto;

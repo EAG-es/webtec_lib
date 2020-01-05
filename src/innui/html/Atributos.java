@@ -6,11 +6,16 @@
 package innui.html;
 
 /**
- *
- * @author emilio
+ * Clase para los atributos de las etiqueta HTML
  */
 public class Atributos {
-    
+    /**
+     * Dado un nombre de atributo, extrae su valor de una etiqueta.
+     * @param atributo Atributo que buscar
+     * @param etiqueta Etiqueta HTML donde buscar
+     * @param error mensaje de error, si lo hay.
+     * @return el valor del atributo, o null si hay error
+     */
     public static String extraer_atributo(String atributo, String etiqueta, String [] error) {
         boolean ret = true;
         String resultado = null;
