@@ -19,16 +19,34 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- *
- * @author daw
+ * Clase con los métodos que pueden sustituirse por una clase derivada para crear una aplicación Webtec.
  */
 public class Webtec extends Application {
+    /**
+     * Prefijo de la ruta de una url que indica que pertenece la aplicación Webtec, o es una URL no Webtec.
+     */
     public static String k_prefijo_url="innui/webtec"; //NOI18N
+    /**
+     * Nombre que utilizar en el contexto para almacenar el mapa de los patrones de las rutas de url y las clases asociadas que utilizar, distintas de las clases por defecto.
+     */
     public static String k_contexto_rutas_mapa="ingui_javafx_webtec_webtec_ruta_mapas"; //NOI18N
+    /**
+     * Mapa de los patrones de las rutas de url y las clases asociadas que utilizar, distintas de las clases por defecto.
+     */
     public Map <String, String> rutas_mapa = null;   
+    /**
+     * Controlador JavaFX que se construye por defecto
+     */
     public FXML_webtecController fXML_webtec_jafController = null;
+    /**
+     * Contexto de la aplicación Webtec
+     */
     public contextos contexto = new contextos();
-    
+    /**
+     * Método de JavaFX para construir el controlador fXML_webtec_jafController y configurarlo
+     * @param stage Escena JavaFX que configurar
+     * @throws Exception En caso de error
+     */
     @Override
     public void start(Stage stage) throws Exception {
         boolean ret = true;
@@ -37,7 +55,6 @@ public class Webtec extends Application {
         URL location = getClass().getResource(resourcePath);
         FXMLLoader fXMLLoader = new FXMLLoader(location);
         Parent root = fXMLLoader.load();
-//        Parent root = fXMLLoader.load(getClass().getResource("/ingui/javafx/browser_jaf/FXML_browser_jaf.fxml"));
         Initializable initializable = fXMLLoader.getController();
         if (initializable instanceof FXML_webtecController) {
             fXML_webtec_jafController = (FXML_webtecController) initializable;
@@ -60,7 +77,12 @@ public class Webtec extends Application {
             throw new Exception(error[0]);
         }
     }
-
+    /**
+     * Método para configurar el icono de la aplicación. Puede sustituisre para modificar la escena con más detalle.
+     * @param stage Escena JavaFX donde aplicar los cambios
+     * @param error mensaje de error, si lo hay
+     * @return true si tiene éxito, o false si hay error
+     */
     public boolean configurar(Stage stage, String [] error) {
         boolean ret = true;
         stage.setTitle(java.util.ResourceBundle.getBundle("in/ingui/javafx/webtec/in").getString("WEBTEC"));
@@ -72,13 +94,19 @@ public class Webtec extends Application {
         observableList.add(image);
         return ret;
     }
-    
+    /**
+     * Método qeu sustituir para añadir procedimientos de inicio sin relación con la escena JavaFX
+     * @param error mensaje de error, si lo hay
+     * @return true si tiene éxito, o false si hay error
+     */
     public boolean iniciar(String [] error)
     {
         return true;
     }
     /**
-     * @param args the command line arguments
+     * Método main que lanza la aplicación Webtec por defecto.
+     * Solo contiene una llamada a: launch(args);
+     * @param args Los argumentos de línea de comando.
      */
     public static void main(String[] args) {
         launch(args);

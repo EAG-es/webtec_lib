@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <script type="text/javascript">
+            {% include #in_js %}
+            {#in_js}
+            var in_array = [];
+            function in_traducir_texto(clave) {
+                var entry;
+                var entry_error = { clave: "", valor:""};
+                var texto = "";
+                var encontrado = false;
+                var entry_clave_mis = "";
+                var clave_mis = "";
+                clave_mis = clave.toLowerCase();
+                for (entry of in_array) {
+                    entry_clave_mis = entry.clave.toLowerCase();
+                    if (entry_clave_mis === clave_mis) {
+                        encontrado = true;
+                        texto = entry.valor;
+                        break;
+                    }
+                }
+                if (encontrado === false) {
+                    entry_error.clave = clave;
+                    entry_error.valor = clave;
+                    console.log(entry_error);
+                    texto = clave;
+                }
+                return texto;
+            }
+            function in_traducir(clave) {
+                var texto = "";
+                texto = in_traducir_texto(clave);
+                document.write(texto);
+            }
+            {#}
+            {% include #in_parcial_js %}
+            {#in_parcial_js}
+            var in_{$in_parcial}_array = {$in_idioma_array};
+            in_array = in_array.concat(in_{$in_parcial}_array);
+            {#}
+        </script>         
+    </head>
+
+    <body>
+        {$in_}Origen{$_in}<br>
+        {$in_}Otro origen{$_in}<br>
+    </body>
+
+</html>

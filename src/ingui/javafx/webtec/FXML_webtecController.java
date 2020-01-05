@@ -5,7 +5,9 @@
  */
 package ingui.javafx.webtec;
 
+import innui.archivos.Utf8;
 import innui.webtec.Webtec_controlador;
+import java.net.URI;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,14 +22,20 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 /**
- *
- * @author daw
+ * Controlador JavaFX de Webtec
  */
 public class FXML_webtecController extends Webtec_controlador implements Initializable {
-
+    /**
+     * Webview de Webtec (Solo contiene una vista Web).
+     */
     @FXML
     public WebView webView;
-    
+    /**
+     * Método que pone el escuchador de cambios de URL
+     * Llama a poner_error, si hay error.
+     * @param url (No se utiliza)
+     * @param rb (No se utiliza)
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         boolean ret = true;
@@ -37,7 +45,11 @@ public class FXML_webtecController extends Webtec_controlador implements Initial
             poner_error(error[0]);
         }
     } 
-    
+    /**
+     * Método que añade un escuchador de cambios de url al objeto webView
+     * @param error mensaje de error, si lo hay
+     * @return true si tiene éxito, o false si hay error
+     */
     public boolean poner_escuchador_cambios_url(String [] error) {
         boolean ret = true;
         WebEngine webEngine = webView.getEngine();
@@ -65,26 +77,56 @@ public class FXML_webtecController extends Webtec_controlador implements Initial
         });
         return ret;
     }
-    
+    /**
+     * Pone un mensaje de error en el objeto webView
+     * @param mensaje mensaje de error, si lo hay
+     * @return true si tiene éxito, o false si hay error
+     */
     @Override
     public boolean poner_error(String mensaje) {
         String [] error = { "" }; //NOI18N
-        return cargar_contenido(mensaje, "text/html", error); //NOI18N
+        return cargar_contenido(mensaje, "text/html", null, error); //NOI18N
     }
-    
+    /**
+     * Pone un texto en el objeto webView
+     * @param tipo_contenido Tipo MIME del contenido, por ejemplo: "text/html"
+     * @param ref El ancla que referenciar en el contenido. Puede ser null.
+     * @param error mensaje de error, si lo hay
+     * @return true si tiene éxito, o false si hay error
+     */
     @Override
-    public boolean cargar_contenido(String contenido, String tipo_contenido, String [] error) {
+    public boolean cargar_contenido(String contenido, String tipo_contenido, String ref, String [] error) {
         boolean ret = true;
-        final String contenido_final = contenido;
-        final String tipo_contenido_final = tipo_contenido;
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-               WebEngine webEngine =  webView.getEngine();
-               webEngine.loadContent(contenido_final, tipo_contenido_final);
+        URI uri;
+        String url_texto;
+        try {
+            if (temporal_file == null) {
+                ret = crear_archivo_temporal(error);
+            }         
+            if (ret) {
+                Utf8.escribir(temporal_file, contenido, error);
+                uri = temporal_file.toURI();
+                url_texto = uri.toURL().toExternalForm();
+                if (ref != null) {
+                    url_texto = url_texto + "#" + ref;
+                }
+                final String url_texto_final = url_texto;
+                final String ref_final = ref;
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                       WebEngine webEngine =  webView.getEngine();
+//                       webEngine.loadContent("");
+                       webEngine.load(url_texto_final);
+                       if (ref_final != null) {
+                           webEngine.reload();
+                       }
+                    }
+                });
             }
-            
-        });
+        } catch (Exception e) {
+            throw new RuntimeException("Error en cargar_contenido. ", e);
+        }
         return ret;
     }
 

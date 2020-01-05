@@ -10,12 +10,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- *
- * @author daw
+ * Clase Abstracta con métodos para la ejecución de acciones.
  */
 public abstract class A_ejecutores {
+    /**
+     * Atributo conteniendo una referencia a los datos de contexto del ejecutor
+     */
     public contextos contexto = null;
-    
+    /**
+     * Asignar el contexto al ejecutor.
+     * @param con Contexto que asignar
+     * @return true si tiene éxito, o false si hay error
+     */
     public boolean configurar(contextos con) {
         contexto = con;
         return true;
@@ -62,7 +68,7 @@ public abstract class A_ejecutores {
         return objects_mapa;
     }
     /**
-     * Método qeu debe ser implementado, para ejecutarse.
+     * Método que debe ser implementado, para ejecutarse.
      * @param objects_mapa datos con nombre que están disponibles
      * @param error mensaje de error, si lo hay.
      * @return true si tiene éxito, false si hay algún error
